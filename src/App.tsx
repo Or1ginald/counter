@@ -3,8 +3,8 @@ import './App.css';
 import {Counter} from "./components/Counter";
 import {CounterMenu} from "./components/CounterMenu/CounterMenu";
 
-function App() {
 
+function App() {
     return (
         <div className="App">
             <div className={"wrapper"}>

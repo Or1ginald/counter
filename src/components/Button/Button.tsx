@@ -3,12 +3,13 @@ import style from "./Button.module.css"
 
 type ButtonPropsType = {
     title: string
-    callBack:()=>void
+    callBack: () => void
+    isDisabled: boolean
 }
 
-export const Button = (props:ButtonPropsType) => {
+export const Button = (props: ButtonPropsType) => {
     return (
-        <button className={style.button} onClick={props.callBack}>
+        <button className={style.button} onClick={()=>props.callBack()} disabled={props.isDisabled}>
             {props.title}
         </button>
     );

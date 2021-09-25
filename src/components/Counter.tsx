@@ -1,22 +1,35 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {Button} from "./Button/Button";
+import {useDispatch, useSelector} from "react-redux";
+import {rootReducerType} from "../store/store";
+import {counterReducerInitialStateType, incrementCounterAC, resetCounterAC} from "../reducers/counter-reducer";
 
 export const Counter = () => {
-    const [counter, setCounter] = useState(0)
+    const counter = useSelector<rootReducerType, counterReducerInitialStateType>(state => state.counterReducer)
+    const dispatch = useDispatch();
     const incrementCounter = () => {
-        setCounter(counter+1)
+        dispatch(incrementCounterAC())
     }
     const reset = () => {
-        setCounter(0)
+        dispatch(resetCounterAC())
     }
+    const displayCounterValue = () => {
+        if (counter.counterValue === null) {
+            return "Counter need to be set"
+        } else {
+            return counter.counterValue
+        }
+    }
+
+
     return (
         <div className="outerBorder">
             <div className="counterWrap">
-                <div className="counterDisplay">{counter}</div>
+                <div className="counterDisplay">{displayCounterValue()}</div>
                 <div className="controlPanel">
                     <div className="controlPanelWrapper">
-                        <Button title={"Inc"} callBack={incrementCounter}/>
-                        <Button title={"Reset"} callBack={reset}/></div>
+                        <Button title={"Inc"} callBack={incrementCounter} isDisabled={counter.isIncButtonDisabled}/>
+                        <Button title={"Reset"} callBack={reset} isDisabled={counter.isResetButtonDisabled}/></div>
                 </div>
             </div>
         </div>
