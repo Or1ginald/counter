@@ -9,7 +9,7 @@ type ButtonPropsType = {
 
 export const Button = (props: ButtonPropsType) => {
     return (
-        <button className={style.button} onClick={()=>props.callBack()} disabled={props.isDisabled}>
+        <button className={style.button} onClick={() => props.callBack()} disabled={props.isDisabled}>
             {props.title}
         </button>
     );

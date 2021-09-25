@@ -13,19 +13,11 @@ export const Counter = () => {
     const reset = () => {
         dispatch(resetCounterAC())
     }
-    const displayCounterValue = () => {
-        if (counter.counterValue === null) {
-            return "Counter need to be set"
-        } else {
-            return counter.counterValue
-        }
-    }
-
 
     return (
         <div className="outerBorder">
             <div className="counterWrap">
-                <div className="counterDisplay">{displayCounterValue()}</div>
+                <div className="counterDisplay">{counter.counterValue}</div>
                 <div className="controlPanel">
                     <div className="controlPanelWrapper">
                         <Button title={"Inc"} callBack={incrementCounter} isDisabled={counter.isIncButtonDisabled}/>
