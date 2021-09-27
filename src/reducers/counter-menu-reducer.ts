@@ -3,16 +3,16 @@ type setInitValueACType = ReturnType<typeof setInitValueAC>
 type setMaxValueACType = ReturnType<typeof setMaxValueAC>
 
 export type counterMenuReducerInitialStateType = {
-    "initValue": string,
-    "maxValue": string,
+    initValue: string,
+    maxValue: string,
 }
 
 export const counterMenuReducerInitialState: counterMenuReducerInitialStateType = {
-    "initValue": "",
-    "maxValue": "",
+    initValue: "",
+    maxValue: "",
 }
 
-export const counterMenuReducer = (state = counterMenuReducerInitialState, action: mainActionType) => {
+export const counterMenuReducer = (state = counterMenuReducerInitialState, action: mainActionType): counterMenuReducerInitialStateType => {
     switch (action.type) {
         case "SET-INIT-VALUE": {
             return {...state, initValue: action.newValue}

@@ -1,64 +1,111 @@
-
-import {counterReducer, incrementCounterAC} from "./counter-reducer";
+import {
+    counterReducer,
+    counterReducerInitialStateType,
+    incrementCounterAC, resetCounterAC, setCounterMessageAC, setCounterParametersAC, setParametersNullAC,
+    switchResetButtonAC,
+    toggleIncButtonAC,
+} from "./counter-reducer";
 
 test("reducer should increment counter value", () => {
-    const startState = {
-        "initValue": "1",
-        "maxValue": "3",
-        "counterValue": "2",
-        "isIncButtonDisabled": true,
-        "isResetButtonDisabled": true,
+    const startState: counterReducerInitialStateType = {
+        initValue: 4,
+        maxValue: 10,
+        counterValue: 5,
+        counterMessage: "Counter need to be set",
+        isIncButtonDisabled: true,
+        isResetButtonDisabled: true,
     };
     const endState = counterReducer(startState, incrementCounterAC())
-    expect(endState.counterValue).toBe("3")
+    expect(endState.counterValue).toBe(6)
 })
-test("counter should not pass max value", () => {
-    const startState = {
-        "initValue": "1",
-        "maxValue": "3",
-        "counterValue": "3",
-        "isIncButtonDisabled": true,
-        "isResetButtonDisabled": true,
+test("reducer should set counterValue to initValue", () => {
+    const startState: counterReducerInitialStateType = {
+        initValue: 4,
+        maxValue: 10,
+        counterValue: 5,
+        counterMessage: "Counter need to be set",
+        isIncButtonDisabled: true,
+        isResetButtonDisabled: false,
     };
-    const endState = counterReducer(startState, incrementCounterAC())
-    expect(endState.counterValue).toBe("3")
-    expect(endState.counterValue).not.toBe("4")
+    const endState = counterReducer(startState, resetCounterAC())
+    expect(endState.counterValue).toBe(4)
+    expect(endState.isIncButtonDisabled).toBe(false)
+    expect(endState.isResetButtonDisabled).toBe(true)
 })
-// test("reducer should set new state for initValue", () => {
-//     const startState = {
-//         "initValue": "3",
-//         "maxValue": "3",
-//         "counterValue": "3",
-//         "isIncButtonDisabled": true,
-//         "isResetButtonDisabled": true,
-//     };
-//     const endState = counterReducer(startState, setInitValueAC("7"))
-//     expect(endState.initValue).toBe("7")
-//     expect(endState.maxValue).not.toBe("7")
-//     expect(endState.counterValue).not.toBe("7")
-// })
-// test("reducer should set new state for maxValue", () => {
-//     const startState = {
-//         "initValue": "5",
-//         "maxValue": "4",
-//         "counterValue": "3",
-//         "isIncButtonDisabled": true,
-//         "isResetButtonDisabled": true,
-//     };
-//     const endState = counterReducer(startState, setMaxValueAC("15"))
-//     expect(endState.initValue).not.toBe("15")
-//     expect(endState.maxValue).toBe("15")
-//     expect(endState.counterValue).not.toBe("15")
-// })
-// test("reducer should set new state for counterValue", () => {
-//     const startState = {
-//         "initValue": "17",
-//         "maxValue": "19",
-//         "counterValue": "",
-//         "isIncButtonDisabled": true,
-//         "isResetButtonDisabled": true,
-//     };
-//     const endState = counterReducer(startState, setCounterValueAC())
-//     expect(endState.maxValue).toBe("19")
-//     expect(endState.counterValue).toBe("17")
-// })
+test("reducer should set isIncButtonDisabled to opposite", () => {
+    const startState: counterReducerInitialStateType = {
+        initValue: null,
+        maxValue: null,
+        counterValue: null,
+        counterMessage: "Counter need to be set",
+        isIncButtonDisabled: true,
+        isResetButtonDisabled: true,
+    };
+    const endState = counterReducer(startState, toggleIncButtonAC())
+    expect(endState.isIncButtonDisabled).toBe(false)
+    expect(endState.isIncButtonDisabled).not.toBe(true)
+})
+test("reducer should set isResetButtonDisabled to false", () => {
+    const startState: counterReducerInitialStateType = {
+        initValue: null,
+        maxValue: null,
+        counterValue: null,
+        counterMessage: "Counter need to be set",
+        isIncButtonDisabled: true,
+        isResetButtonDisabled: true,
+    };
+    const endState = counterReducer(startState, switchResetButtonAC(false))
+    expect(endState.isResetButtonDisabled).toBe(false)
+    expect(endState.isResetButtonDisabled).not.toBe(true)
+})
+test("reducer should set new counterMessage", () => {
+    const startState: counterReducerInitialStateType = {
+        initValue: null,
+        maxValue: null,
+        counterValue: null,
+        counterMessage: "Counter need to be set",
+        isIncButtonDisabled: true,
+        isResetButtonDisabled: false,
+    };
+    const endState = counterReducer(startState, setCounterMessageAC("new message"))
+    expect(endState.counterMessage).toBe("new message")
+    expect(endState.counterMessage).not.toBe("Counter need to be set")
+})
+test("reducer should set counter parameters", () => {
+    const startState: counterReducerInitialStateType = {
+        initValue: null,
+        maxValue: null,
+        counterValue: null,
+        counterMessage: "Counter need to be set",
+        isIncButtonDisabled: true,
+        isResetButtonDisabled: false,
+    };
+    const endState = counterReducer(startState, setCounterParametersAC(5, 7))
+    expect(endState.counterValue).toBe(5)
+    expect(endState.initValue).toBe(5)
+    expect(endState.maxValue).toBe(7)
+    expect(endState.counterValue).not.toBe(null)
+})
+test("reducer should set reset counter", () => {
+    const startState: counterReducerInitialStateType = {
+        initValue: 5,
+        maxValue: 15,
+        counterValue: 7,
+        counterMessage: "Counter need to be set",
+        isIncButtonDisabled: false,
+        isResetButtonDisabled: true,
+    };
+    const expectation = {
+        initValue: null,
+        maxValue: null,
+        counterValue: null,
+        counterMessage: "Counter need to be set",
+        isIncButtonDisabled: true,
+        isResetButtonDisabled: true,
+    }
+
+    const endState = counterReducer(startState, setParametersNullAC())
+    expect(endState).toStrictEqual(expectation)
+
+})
+

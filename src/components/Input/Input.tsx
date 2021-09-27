@@ -10,8 +10,12 @@ type InputPropsType = {
 
 export const Input = (props: InputPropsType) => {
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+        // function isNumber(str: string) {
+        //     return /^-?\d+$/.test(str);
+        // }
+
         let digit = e.currentTarget.value;
-        return props.callBack(digit)
+        return /*isNumber(digit)? */props.callBack(digit) /*: false*/
     }
     return (
         <input className={styles.input} type="text" placeholder={props.title}
